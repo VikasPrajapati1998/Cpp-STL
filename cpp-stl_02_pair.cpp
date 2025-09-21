@@ -6,7 +6,7 @@ using namespace std;
 * Covers: initialization, copying, referencing, arrays, and user input.
 */
 
-int main() {
+int main(int argc, char* argv[]) {
     // ========== Method 01: Initialization using make_pair ==========
     cout << "=============== Method 01 ===============" << endl;
     pair<int, string> s32_pair01;
@@ -101,6 +101,8 @@ int main() {
     pair<string, double> user_emp;
     cout << "Enter Your Name: "; 
     cin >> user_emp.first;
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     cout << "Enter Your Salary: "; 
     cin >> user_emp.second;

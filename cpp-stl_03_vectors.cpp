@@ -10,7 +10,7 @@ void PRINT_VECTOR(vector<int> v);
 void PRINT_ARRAY(int arr[], int size_of_array);
 
 // ======================== MAIN FUNCTION ==========================
-int main() {
+int main(int argc, char *argv[]) {
 #ifdef USE_ARRAY
     // ========== ARRAY PART ==========
     int m, y;
