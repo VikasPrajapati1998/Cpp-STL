@@ -2,16 +2,27 @@
 using namespace std;
 
 // Comment this line to compile the vector part instead
-// #define USE_ARRAY
-// #define USE_VECTOR
+#define MACRO_ARRAY
+#define MACRO_VECTOR
+#define MACRO_COPY_REFERENCE_VECTOR
+#define MACRO_INPUT_VECTOR
 
 // ===================== FUNCTION DECLARATIONS =====================
-void PRINT_VECTOR(vector<int> v);
+template<typename T> 
+void PRINT_VECTOR(vector<T> v);
+
 void PRINT_ARRAY(int arr[], int size_of_array);
+
+void SHOW_VECTOR(vector<int> &v);
+
+template<typename T>
+void INPUT_VECTOR(vector<T> &vct, int size_of_vector);
+
+void INPUT_VECTOR(vector<string>& vct, int size_of_vector);
 
 // ======================== MAIN FUNCTION ==========================
 int main(int argc, char *argv[]) {
-#ifdef USE_ARRAY
+#ifdef MACRO_ARRAY
     // ========== ARRAY PART ==========
     int m, y;
     cout << "Enter the size of array: "; 
@@ -27,7 +38,7 @@ int main(int argc, char *argv[]) {
     }
 #endif
 
-#ifdef USE_VECTOR
+#ifdef MACRO_VECTOR
     // ========== VECTOR PART ==========
     vector<int> v;
     int n, x;
@@ -48,7 +59,8 @@ int main(int argc, char *argv[]) {
     cout << endl << endl;
 #endif
 
-    // static vector
+#ifdef MACRO_COPY_REFERENCE_VECTOR
+    // STATIC VECTOR
     vector<int> v1(5);
     PRINT_VECTOR(v1);
     v1.push_back(7);
@@ -57,18 +69,57 @@ int main(int argc, char *argv[]) {
 
     vector<int> v2(5, 3); // (size_of_vector, filled_number)
     PRINT_VECTOR(v2);
-    v2.push_back(8);
+    v2.push_back(8);  // O(1)
     PRINT_VECTOR(v2);
     cout << endl;
+
+    // pop_back() 
+    // int value = v2.pop_back();  // O(1)    // to store the last elelment into a variable is not possible because the return type of pop_back is void
+    v2.pop_back();  // O(1)
+    PRINT_VECTOR(v2);
+
+    // COPY OF VECTOR
+    /*Copy is a costly process in Cpp. Because it's time complexity is O(n). So always try to pass the reference of vector rather than create a new copy.*/
+    vector<int> v3 = v2;  // O(n)
+    v3.push_back(9);
+    SHOW_VECTOR(v2);
+    SHOW_VECTOR(v3);
+
+    // REFRENCE OF VECTOR
+    /*Reference is pointing the same vector. So if we make changes in anyone of them that will be reflect on the other one.*/
+    vector<int> v4 = {2, 3, 4, 5, 6, 7};    // Actual Vector
+    vector<int> &v5 =  v4;                  // Reference Vector
+    cout << "Actual Vector: "; SHOW_VECTOR(v4);
+    cout << "Reference Vector: "; SHOW_VECTOR(v5);
+
+    v4.push_back(11);
+    cout << "Actual Vector: "; SHOW_VECTOR(v4);
+    cout << "Reference Vector: "; SHOW_VECTOR(v5);
+#endif
+
+#ifdef MACRO_INPUT_VECTOR
+    // Vector of String
+    vector<string> vct1;
+    int size;
+    cout << "Enter the size of vector: ";
+    cin >> size;
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    INPUT_VECTOR(vct1, size);
+    PRINT_VECTOR(vct1);
+
+
+#endif
 
 
     return 0;
 }
 
 // ===================== FUNCTION DEFINITIONS =======================
-void PRINT_VECTOR(vector<int> v) {
+template<typename T>
+void PRINT_VECTOR(vector<T> v) {
     cout << "Vector: [";
-    for (int i = 0; i < v.size(); i++) {
+    for (int i=0; i<v.size(); i++) {
         cout << v[i];
         if (i + 1 != v.size()) {
             cout << ", ";
@@ -86,4 +137,38 @@ void PRINT_ARRAY(int arr[], int size_of_array) {
         }
     }
     cout << "]" << endl;
+}
+
+void SHOW_VECTOR(vector<int> &v) {
+    cout << "Vector: [";
+    for (int i = 0; i < v.size(); i++) {
+        cout << v[i];
+        if (i + 1 != v.size()) {
+            cout << ", ";
+        }
+    }
+    cout << "]" << endl;
+}
+
+template<typename T>
+void INPUT_VECTOR(vector<T>& vct, int size_of_vector) {
+    T item;
+    cin.clear();
+    for(int i=0; i<size_of_vector; i++) {
+        cout << "Item " << i+1 << " : ";
+        cin >> item;
+        vct.push_back(item);
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+}
+
+void INPUT_VECTOR(vector<string>& vct, int size_of_vector) {
+    string item;
+    cin.clear();
+    for(int i=0; i<size_of_vector; i++) {
+        cout << "Item " << i+1 << " : ";
+        getline(cin, item);
+        vct.push_back(item);
+    }
 }
