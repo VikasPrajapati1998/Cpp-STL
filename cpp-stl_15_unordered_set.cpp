@@ -25,6 +25,16 @@ int main(int argc, char* argv[]) {
         s1.insert("beta"); // duplicate, will be ignored
         printSet(s1);
 
+        auto it = s1.find("charlie");
+        if (it != s1.end()) {
+            std::cout << "Find: " << *it << std::endl;
+        } else {
+            std::cout << "Not Found" << std::endl;
+        }
+
+        s1.erase("charlie");
+        printSet(s1);
+
         // Questions:
         /*
         Given N strings and Q queries. In each query you are given a string, print yes if string is present else print no.
@@ -55,7 +65,7 @@ int main(int argc, char* argv[]) {
                 std::cout << "no" << std::endl;
             }
         }
-
+        
     } catch (const std::exception& e) {
         std::cerr << "Exception: " << e.what() << std::endl;
     } catch (...) {
