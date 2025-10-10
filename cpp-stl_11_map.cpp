@@ -3,6 +3,7 @@ Maps :
     Maps are associative containers that store elements in key-value pairs. Map is not contiguous in memory.
     Each key is unique, and it is used to access the corresponding value. Maps use red-black trees to maintain order.
     They provide O(log n) time complexity for search, insert, and delete operations. 
+    Map print the keys in sorted order.
 
 Unordered Maps: 
     Unordered maps are similar to maps but do not maintain any specific order of elements.
@@ -123,7 +124,7 @@ int main(int argc, char* argv[]) {
         }
 
         printMap(wordCount);
-        
+
 
     } catch (const std::exception& e) {
         std::cerr << "Exception: " << e.what() << std::endl;
